@@ -1,10 +1,9 @@
 var objects;
 (function (objects) {
     var Control = (function () {
-        function Control(rotationSpeed, opacity, color) {
+        function Control(rotationSpeed, bouncingSpeed) {
             this.rotationSpeed = rotationSpeed;
-            this.opacity = opacity;
-            this.color = color;
+            this.bouncingSpeed = bouncingSpeed;
         }
         return Control;
     })();
