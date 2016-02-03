@@ -28,7 +28,7 @@ var cubeMaterial: LambertMaterial;
 var planeMaterial: LambertMaterial;
 var sphereMaterial: LambertMaterial;
 var axes:AxisHelper;
-var cube: Mesh;
+var head,torso,arm,hand,lLeg,rLeg,lShoe,rShoe: Mesh;
 var plane: Mesh;
 var sphere: Mesh;
 var spotLight: SpotLight;
@@ -62,7 +62,7 @@ function init() {
 	
 	plane.rotation.x = -0.5 * Math.PI;
     plane.position.x = 0;
-	plane.position.y = 0;
+	plane.position.y = -2;
     plane.position.z = 0;
 	
 	scene.add(plane);
@@ -70,67 +70,105 @@ function init() {
     
     //Add a Head to the Scene
 	cubeGeometry = new BoxGeometry(2, 2, 2);
-	cubeMaterial = new LambertMaterial({color:0xff0000});
-	cube = new Mesh(cubeGeometry, cubeMaterial);    
-	cube.castShadow = true;
+	cubeMaterial = new LambertMaterial({color:0xffd299});
+	head = new Mesh(cubeGeometry, cubeMaterial);    
+	head.castShadow = true;
     
-    cube.position.x = 0;
-    cube.position.y = 12;
-    cube.position.z = 0;
+    head.position.x = 0;
+    head.position.y = 12;
+    head.position.z = 0;
     
-	scene.add(cube);
+	scene.add(head);
 	console.log("Added Head Primitive to scene...");
 
     //Add a Torso to the Scene
 	cubeGeometry = new BoxGeometry(2.5, 7, 4);
-	cubeMaterial = new LambertMaterial({color:0xff0000});
-	cube = new Mesh(cubeGeometry, cubeMaterial);    
-	cube.castShadow = true;
+	cubeMaterial = new LambertMaterial({color:0x4fc7ea});
+	torso = new Mesh(cubeGeometry, cubeMaterial);    
+	torso.castShadow = true;
     
-    cube.position.x = 0;
-    cube.position.y = 7.5;
-    cube.position.z = 0;
+    torso.position.x = 0;
+    torso.position.y = 7.5;
+    torso.position.z = 0;
     
-	scene.add(cube);
+	scene.add(torso);
 	console.log("Added Torso Primitive to scene...");
     
     //Add a Arms to the Scene
 	cubeGeometry = new BoxGeometry(1, 1, 10);
-	cubeMaterial = new LambertMaterial({color:0xff0000});
-	cube = new Mesh(cubeGeometry, cubeMaterial);    
-	cube.castShadow = true;
+	cubeMaterial = new LambertMaterial({color:0x4fc7ea});
+	arm = new Mesh(cubeGeometry, cubeMaterial);    
+	arm.castShadow = true;
     
-    cube.position.x = 0;
-    cube.position.y = 10.45;
-    cube.position.z = 0;
+    arm.position.x = 0;
+    arm.position.y = 10.45;
+    arm.position.z = 0;
     
-	scene.add(cube);
+	scene.add(arm);
 	console.log("Added Arms Primitive to scene...");
+    
+    //Add a Hands to the Scene
+	cubeGeometry = new BoxGeometry(0.5, 0.8, 11.8);
+	cubeMaterial = new LambertMaterial({color:0xffd299});
+	hand = new Mesh(cubeGeometry, cubeMaterial);    
+	hand.castShadow = true;
+    
+    hand.position.x = 0;
+    hand.position.y = 10.45;
+    hand.position.z = 0;
+    
+	scene.add(hand);
+	console.log("Added Hands Primitive to scene...");
     
     //Add a Left Leg to the Scene
 	cubeGeometry = new BoxGeometry(1.5, 4, 1.5);
-	cubeMaterial = new LambertMaterial({color:0xff0000});
-	cube = new Mesh(cubeGeometry, cubeMaterial);    
-	cube.castShadow = true;
+	cubeMaterial = new LambertMaterial({color:0x005067});
+	lLeg = new Mesh(cubeGeometry, cubeMaterial);    
+	lLeg.castShadow = true;
     
-    cube.position.x = 0;
-    cube.position.y = 2;
-    cube.position.z = -1.2;
+    lLeg.position.x = 0;
+    lLeg.position.y = 2;
+    lLeg.position.z = -1.2;
     
-	scene.add(cube);
+	scene.add(lLeg);
     
     //Add a Right Leg to the Scene
 	cubeGeometry = new BoxGeometry(1.5, 4, 1.5);
-	cubeMaterial = new LambertMaterial({color:0xff0000});
-	cube = new Mesh(cubeGeometry, cubeMaterial);    
-	cube.castShadow = true;
+	cubeMaterial = new LambertMaterial({color:0x005067});
+	rLeg = new Mesh(cubeGeometry, cubeMaterial);    
+	rLeg.castShadow = true;
     
-    cube.position.x = 0;
-    cube.position.y = 2;
-    cube.position.z = 1.2;
+    rLeg.position.x = 0;
+    rLeg.position.y = 2;
+    rLeg.position.z = 1.2;
     
-	scene.add(cube);
+	scene.add(rLeg);
 	console.log("Added Legs Primitive to scene...");
+    
+    //Add a Left Shoe to the Scene
+	cubeGeometry = new BoxGeometry(2, 0.7, 1.5);
+	cubeMaterial = new LambertMaterial({color:0x4f59ea});
+	lShoe = new Mesh(cubeGeometry, cubeMaterial);    
+	lShoe.castShadow = true;
+    
+    lShoe.position.x = 0.2;
+    lShoe.position.y = 0.08;
+    lShoe.position.z = -1.2;
+    
+	scene.add(lShoe);
+    
+    //Add a Right Shoe to the Scene
+	cubeGeometry = new BoxGeometry(2, 0.7, 1.5);
+	cubeMaterial = new LambertMaterial({color:0x4f59ea});
+	rShoe = new Mesh(cubeGeometry, cubeMaterial);    
+	rShoe.castShadow = true;
+    
+    rShoe.position.x = 0.2;
+    rShoe.position.y = 0.08;
+    rShoe.position.z = 1.2;
+    
+	scene.add(rShoe);
+	console.log("Added Shoes Primitive to scene...");
 	
     //Add a Sphere to the Scene
     sphereGeometry = new SphereGeometry(4, 20, 20);
@@ -193,7 +231,15 @@ function gameLoop():void {
 	
     //animate cube
     //cube.rotation.x += control.rotationSpeed;
-    cube.rotation.y += control.rotationSpeed;
+    head.rotation.y += control.rotationSpeed;
+    torso.rotation.y += control.rotationSpeed;
+    arm.rotation.y += control.rotationSpeed;
+    hand.rotation.y += control.rotationSpeed;
+    //lLeg.rotation.y += control.rotationSpeed;
+    //lLeg.rotation.z += control.rotationSpeed;
+   // rLeg.rotation.y += control.rotationSpeed;
+   // lShoe.rotation.y += control.rotationSpeed;
+   // rShoe.rotation.y += control.rotationSpeed;
     //cube.rotation.z += control.rotationSpeed;
     
     //bounce the ball
