@@ -1,12 +1,13 @@
 var objects;
 (function (objects) {
     var Control = (function () {
-        //color: number;
-        function Control(rotationX, rotationY, rotationZ) {
+        function Control(rotationX, rotationY, rotationZ, shirt, skin, pants) {
             this.rotationX = rotationX;
             this.rotationY = rotationY;
             this.rotationZ = rotationZ;
-            //this.color=color;
+            this.shirt = shirt;
+            this.skin = skin;
+            this.pants = pants;
         }
         return Control;
     })();

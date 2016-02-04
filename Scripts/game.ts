@@ -36,7 +36,7 @@ var cubeMan: Group;
 var spotLight: SpotLight;
 var pointLight: PointLight;
 var control: Control;
-var gui,guiRotation: GUI;
+var gui,guiRotation,guiShirt: GUI;
 var stats:Stats;
 var step:number = 0, angle:number=0;
 
@@ -160,7 +160,7 @@ function init() {
 	
     // add controls
 	gui = new GUI();
-	control = new Control(0,  0.03, 0);
+	control = new Control(0,  0.03, 0, 0x4fc7ea, 0xffd299, 0x005067);
 	addControl(control);
     
     // Add framerate stats
@@ -188,8 +188,10 @@ function addControl(controlObject: Control):void {
     guiRotation.add(controlObject, 'rotationY', 0, 0.5);
     guiRotation.add(controlObject, 'rotationZ', 0, 0.5);
     
-    //Color Folder
-    
+    //Color
+    gui.addColor(controlObject, 'shirt');
+    gui.addColor(controlObject, 'skin');
+    gui.addColor(controlObject, 'pants');
     
 }
 
@@ -210,6 +212,15 @@ function gameLoop():void {
     cubeMan.rotation.x += control.rotationX;
     cubeMan.rotation.y += control.rotationY;
     cubeMan.rotation.z += control.rotationZ;
+    
+    //color Cube Man
+    torso.material.color=new Color(control.shirt);
+    arm.material.color=new Color(control.shirt);
+    lLeg.material.color=new Color(control.pants);
+    rLeg.material.color=new Color(control.pants);
+    hand.material.color=new Color(control.skin);
+    head.material.color=new Color(control.skin);
+    
     
 	// render using requestAnimationFrame
 	requestAnimationFrame(gameLoop);

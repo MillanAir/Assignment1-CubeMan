@@ -3,12 +3,16 @@ module objects {
 		rotationX: number;
         rotationY: number;
         rotationZ: number;
-        //color: number;
-		constructor(rotationX: number, rotationY: number, rotationZ: number) {
+        shirt: number; //Hexa-Decimal Value
+        skin: number; //Hexa-Decimal Value
+        pants: number; //Hexa-Decimal Value
+		constructor(rotationX: number, rotationY: number, rotationZ: number, shirt:number, skin:number, pants:number) {
 			this.rotationX = rotationX;
             this.rotationY = rotationY;
             this.rotationZ = rotationZ;
-            //this.color=color;
+            this.shirt=shirt;
+            this.skin=skin;
+            this.pants=pants;
 		}
 	}
 }

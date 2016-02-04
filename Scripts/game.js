@@ -34,7 +34,7 @@ var cubeMan;
 var spotLight;
 var pointLight;
 var control;
-var gui, guiRotation;
+var gui, guiRotation, guiShirt;
 var stats;
 var step = 0, angle = 0;
 function init() {
@@ -129,7 +129,7 @@ function init() {
     console.log("Added Spot Light to Scene");
     // add controls
     gui = new GUI();
-    control = new Control(0, 0.03, 0);
+    control = new Control(0, 0.03, 0, 0x4fc7ea, 0xffd299, 0x005067);
     addControl(control);
     // Add framerate stats
     addStatsObject();
@@ -149,7 +149,10 @@ function addControl(controlObject) {
     guiRotation.add(controlObject, 'rotationX', 0, 0.5);
     guiRotation.add(controlObject, 'rotationY', 0, 0.5);
     guiRotation.add(controlObject, 'rotationZ', 0, 0.5);
-    //Color Folder
+    //Color
+    gui.addColor(controlObject, 'shirt');
+    gui.addColor(controlObject, 'skin');
+    gui.addColor(controlObject, 'pants');
 }
 function addStatsObject() {
     stats = new Stats();
@@ -166,6 +169,13 @@ function gameLoop() {
     cubeMan.rotation.x += control.rotationX;
     cubeMan.rotation.y += control.rotationY;
     cubeMan.rotation.z += control.rotationZ;
+    //color Cube Man
+    torso.material.color = new Color(control.shirt);
+    arm.material.color = new Color(control.shirt);
+    lLeg.material.color = new Color(control.pants);
+    rLeg.material.color = new Color(control.pants);
+    hand.material.color = new Color(control.skin);
+    head.material.color = new Color(control.skin);
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
     // render the scene
