@@ -1,4 +1,15 @@
 // MAIN GAME FILE
+/**
+ * Source:              game.ts
+ * Author:              Milan Verma
+ * Last Modified by:    Milan Verma
+ * Date Last Modified:  04-Feb-2016
+ * Desc:                Assignment 1 - Cube Man. A Code for displaying a	3D	Humanoid	Character.	The	Character	is	be	composed	of	primitive	Cube
+ *                      Meshes	arranged	in	a humanoid	shape.
+ *                      On-Screen	Controls	will	allow	the	user	to	rotate	the	character	in	any	direction.
+ *                      The	user	can	the	controls	to	change	the	colour	properties	of	Cube	Materials	(as	a	group).
+ * Rev History:         1.0
+ */
 var Scene = THREE.Scene;
 var Renderer = THREE.WebGLRenderer;
 var PerspectiveCamera = THREE.PerspectiveCamera;
@@ -33,7 +44,6 @@ var sphere;
 var cubeMan;
 var ambientLight;
 var spotLight;
-var pointLight;
 var control;
 var gui, guiRotation, guiShirt;
 var stats;
@@ -60,7 +70,6 @@ function init() {
     plane.position.y = 0;
     plane.position.z = 0;
     scene.add(plane);
-    console.log("Added Plane Primitive to scene...");
     //Creating Group
     cubeMan = new THREE.Object3D(); //create an empty container
     //Add a Head to the Scene
@@ -72,7 +81,7 @@ function init() {
     head.position.y = 12;
     head.position.z = 0;
     cubeMan.add(head);
-    //Add a Torso to the Scene
+    //Add a Torso to the Container
     cubeGeometry = new BoxGeometry(2.5, 7, 4);
     cubeMaterial = new LambertMaterial({ color: 0x4fc7ea });
     torso = new Mesh(cubeGeometry, cubeMaterial);
@@ -81,8 +90,7 @@ function init() {
     torso.position.y = 7.5;
     torso.position.z = 0;
     cubeMan.add(torso);
-    console.log("Added Torso Primitive to scene...");
-    //Add a Arms to the Scene
+    //Add a Arms to the Container
     cubeGeometry = new BoxGeometry(1, 1, 10);
     cubeMaterial = new LambertMaterial({ color: 0x4fc7ea });
     arm = new Mesh(cubeGeometry, cubeMaterial);
@@ -91,8 +99,7 @@ function init() {
     arm.position.y = 10.45;
     arm.position.z = 0;
     cubeMan.add(arm);
-    console.log("Added Arms Primitive to scene...");
-    //Add a Hands to the Scene
+    //Add a Hands to the Container
     cubeGeometry = new BoxGeometry(0.5, 0.8, 11.8);
     cubeMaterial = new LambertMaterial({ color: 0xffd299 });
     hand = new Mesh(cubeGeometry, cubeMaterial);
@@ -101,8 +108,7 @@ function init() {
     hand.position.y = 10.45;
     hand.position.z = 0;
     cubeMan.add(hand);
-    console.log("Added Hands Primitive to scene...");
-    //Add a Left Leg to the Scene
+    //Add a Left Leg to the Container
     cubeGeometry = new BoxGeometry(1.5, 4, 1.5);
     cubeMaterial = new LambertMaterial({ color: 0x005067 });
     lLeg = new Mesh(cubeGeometry, cubeMaterial);
@@ -111,7 +117,7 @@ function init() {
     lLeg.position.y = 2;
     lLeg.position.z = -1.2;
     cubeMan.add(lLeg);
-    //Add a Right Leg to the Scene
+    //Add a Right Leg to the Container
     cubeGeometry = new BoxGeometry(1.5, 4, 1.5);
     cubeMaterial = new LambertMaterial({ color: 0x005067 });
     rLeg = new Mesh(cubeGeometry, cubeMaterial);
