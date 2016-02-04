@@ -12,7 +12,7 @@ var MeshBasicMaterial = THREE.MeshBasicMaterial;
 var Mesh = THREE.Mesh;
 var Group = THREE.Object3D;
 var SpotLight = THREE.SpotLight;
-var PointLight = THREE.PointLight;
+var AmbientLight = THREE.AmbientLight;
 var Control = objects.Control;
 var GUI = dat.GUI;
 var Color = THREE.Color;
@@ -31,6 +31,7 @@ var head, torso, arm, hand, lLeg, rLeg, lShoe, rShoe;
 var plane;
 var sphere;
 var cubeMan;
+var ambientLight;
 var spotLight;
 var pointLight;
 var control;
@@ -121,6 +122,10 @@ function init() {
     cubeMan.add(rLeg);
     scene.add(cubeMan);
     console.log("Added the Cube Man...");
+    // Add an AmbientLight to the scene
+    ambientLight = new AmbientLight(0x090909);
+    scene.add(ambientLight);
+    console.log("Added an Ambient Light to Scene");
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
     spotLight.position.set(-40, 60, -10);
@@ -129,7 +134,7 @@ function init() {
     console.log("Added Spot Light to Scene");
     // add controls
     gui = new GUI();
-    control = new Control(0, 0.03, 0, 0x4fc7ea, 0xffd299, 0x005067);
+    control = new Control(0, 0.01, 0, 0x4fc7ea, 0xffd299, 0x005067);
     addControl(control);
     // Add framerate stats
     addStatsObject();
