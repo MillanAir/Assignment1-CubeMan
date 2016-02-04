@@ -1,5 +1,5 @@
-bower_components
-node_modules
-Scripts/lib
-typings
+//bower_components
+//node_modules
+//Scripts/lib
+//typings
 .DS_Store
