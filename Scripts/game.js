@@ -10,6 +10,7 @@ var AxisHelper = THREE.AxisHelper;
 var LambertMaterial = THREE.MeshLambertMaterial;
 var MeshBasicMaterial = THREE.MeshBasicMaterial;
 var Mesh = THREE.Mesh;
+var Group = THREE.Object3D;
 var SpotLight = THREE.SpotLight;
 var PointLight = THREE.PointLight;
 var Control = objects.Control;
@@ -29,12 +30,13 @@ var axes;
 var head, torso, arm, hand, lLeg, rLeg, lShoe, rShoe;
 var plane;
 var sphere;
+var cubeMan;
 var spotLight;
 var pointLight;
 var control;
-var gui;
+var gui, guiRotation;
 var stats;
-var step = 0;
+var step = 0, angle = 0;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -54,10 +56,12 @@ function init() {
     plane.receiveShadow = true;
     plane.rotation.x = -0.5 * Math.PI;
     plane.position.x = 0;
-    plane.position.y = -2;
+    plane.position.y = 0;
     plane.position.z = 0;
     scene.add(plane);
     console.log("Added Plane Primitive to scene...");
+    //Creating Group
+    cubeMan = new THREE.Object3D(); //create an empty container
     //Add a Head to the Scene
     cubeGeometry = new BoxGeometry(2, 2, 2);
     cubeMaterial = new LambertMaterial({ color: 0xffd299 });
@@ -66,8 +70,7 @@ function init() {
     head.position.x = 0;
     head.position.y = 12;
     head.position.z = 0;
-    scene.add(head);
-    console.log("Added Head Primitive to scene...");
+    cubeMan.add(head);
     //Add a Torso to the Scene
     cubeGeometry = new BoxGeometry(2.5, 7, 4);
     cubeMaterial = new LambertMaterial({ color: 0x4fc7ea });
@@ -76,7 +79,7 @@ function init() {
     torso.position.x = 0;
     torso.position.y = 7.5;
     torso.position.z = 0;
-    scene.add(torso);
+    cubeMan.add(torso);
     console.log("Added Torso Primitive to scene...");
     //Add a Arms to the Scene
     cubeGeometry = new BoxGeometry(1, 1, 10);
@@ -86,7 +89,7 @@ function init() {
     arm.position.x = 0;
     arm.position.y = 10.45;
     arm.position.z = 0;
-    scene.add(arm);
+    cubeMan.add(arm);
     console.log("Added Arms Primitive to scene...");
     //Add a Hands to the Scene
     cubeGeometry = new BoxGeometry(0.5, 0.8, 11.8);
@@ -96,7 +99,7 @@ function init() {
     hand.position.x = 0;
     hand.position.y = 10.45;
     hand.position.z = 0;
-    scene.add(hand);
+    cubeMan.add(hand);
     console.log("Added Hands Primitive to scene...");
     //Add a Left Leg to the Scene
     cubeGeometry = new BoxGeometry(1.5, 4, 1.5);
@@ -106,7 +109,7 @@ function init() {
     lLeg.position.x = 0;
     lLeg.position.y = 2;
     lLeg.position.z = -1.2;
-    scene.add(lLeg);
+    cubeMan.add(lLeg);
     //Add a Right Leg to the Scene
     cubeGeometry = new BoxGeometry(1.5, 4, 1.5);
     cubeMaterial = new LambertMaterial({ color: 0x005067 });
@@ -115,37 +118,9 @@ function init() {
     rLeg.position.x = 0;
     rLeg.position.y = 2;
     rLeg.position.z = 1.2;
-    scene.add(rLeg);
-    console.log("Added Legs Primitive to scene...");
-    //Add a Left Shoe to the Scene
-    cubeGeometry = new BoxGeometry(2, 0.7, 1.5);
-    cubeMaterial = new LambertMaterial({ color: 0x4f59ea });
-    lShoe = new Mesh(cubeGeometry, cubeMaterial);
-    lShoe.castShadow = true;
-    lShoe.position.x = 0.2;
-    lShoe.position.y = 0.08;
-    lShoe.position.z = -1.2;
-    scene.add(lShoe);
-    //Add a Right Shoe to the Scene
-    cubeGeometry = new BoxGeometry(2, 0.7, 1.5);
-    cubeMaterial = new LambertMaterial({ color: 0x4f59ea });
-    rShoe = new Mesh(cubeGeometry, cubeMaterial);
-    rShoe.castShadow = true;
-    rShoe.position.x = 0.2;
-    rShoe.position.y = 0.08;
-    rShoe.position.z = 1.2;
-    scene.add(rShoe);
-    console.log("Added Shoes Primitive to scene...");
-    //Add a Sphere to the Scene
-    sphereGeometry = new SphereGeometry(4, 20, 20);
-    sphereMaterial = new LambertMaterial({ color: 0x7777ff });
-    sphere = new Mesh(sphereGeometry, sphereMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 20;
-    sphere.position.y = 4;
-    sphere.position.z = 2;
-    //scene.add(sphere);
-    //console.log("Added Sphere Primitive to scene");
+    cubeMan.add(rLeg);
+    scene.add(cubeMan);
+    console.log("Added the Cube Man...");
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
     spotLight.position.set(-40, 60, -10);
@@ -154,7 +129,7 @@ function init() {
     console.log("Added Spot Light to Scene");
     // add controls
     gui = new GUI();
-    control = new Control(0.02, 0.03);
+    control = new Control(0, 0.03, 0);
     addControl(control);
     // Add framerate stats
     addStatsObject();
@@ -168,8 +143,13 @@ function onResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 function addControl(controlObject) {
-    gui.add(controlObject, 'rotationSpeed', 0, 0.5);
-    gui.add(controlObject, 'bouncingSpeed', 0, 0.5);
+    //gui.add(controlObject, 'rotationSpeed', 0, 0.5);
+    //Rotation Folder
+    guiRotation = gui.addFolder('Rotation');
+    guiRotation.add(controlObject, 'rotationX', 0, 0.5);
+    guiRotation.add(controlObject, 'rotationY', 0, 0.5);
+    guiRotation.add(controlObject, 'rotationZ', 0, 0.5);
+    //Color Folder
 }
 function addStatsObject() {
     stats = new Stats();
@@ -182,22 +162,10 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop() {
     stats.update();
-    //animate cube
-    //cube.rotation.x += control.rotationSpeed;
-    head.rotation.y += control.rotationSpeed;
-    torso.rotation.y += control.rotationSpeed;
-    arm.rotation.y += control.rotationSpeed;
-    hand.rotation.y += control.rotationSpeed;
-    //lLeg.rotation.y += control.rotationSpeed;
-    //lLeg.rotation.z += control.rotationSpeed;
-    // rLeg.rotation.y += control.rotationSpeed;
-    // lShoe.rotation.y += control.rotationSpeed;
-    // rShoe.rotation.y += control.rotationSpeed;
-    //cube.rotation.z += control.rotationSpeed;
-    //bounce the ball
-    step += control.bouncingSpeed;
-    sphere.position.x = 20 + (10 * (Math.cos(step)));
-    sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+    //animate Cube Man
+    cubeMan.rotation.x += control.rotationX;
+    cubeMan.rotation.y += control.rotationY;
+    cubeMan.rotation.z += control.rotationZ;
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
     // render the scene

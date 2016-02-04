@@ -1,9 +1,12 @@
 var objects;
 (function (objects) {
     var Control = (function () {
-        function Control(rotationSpeed, bouncingSpeed) {
-            this.rotationSpeed = rotationSpeed;
-            this.bouncingSpeed = bouncingSpeed;
+        //color: number;
+        function Control(rotationX, rotationY, rotationZ) {
+            this.rotationX = rotationX;
+            this.rotationY = rotationY;
+            this.rotationZ = rotationZ;
+            //this.color=color;
         }
         return Control;
     })();
